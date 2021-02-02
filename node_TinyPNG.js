@@ -1,18 +1,32 @@
 const fs = require('fs')
 const https = require('https')
+const items = require('./items')
 
-const url = 'https://gamepedia.cursecdn.com/escapefromtarkov_gamepedia/thumb/0/01/SlingBackPackIcon.png/105px-SlingBackPackIcon.png?version=9165cf849b843362af2ba6fb6b42e55a'
+const testItems = [
+  {
+    wikiIcon: 'https://gamepedia.cursecdn.com/escapefromtarkov_gamepedia/thumb/0/01/SlingBackPackIcon.png/105px-SlingBackPackIcon.png?version=9165cf849b843362af2ba6fb6b42e55a',
+    uid: 'test123',
+  }
+]
 
-const bufferArray = [];
-https.get(url, res => {
-  res.on('data', data => {
-    bufferArray.push(data);
-  })
+let count = 1;
 
-  res.on('end', () => {
-    const content = Buffer.concat(bufferArray)
-    fs.writeFile('test.png', content, err => {
-      console.error(err)
+items.forEach(item=>{
+  item.wikiIcon && https.get(item.wikiIcon, res => {
+    let bufferArray = [];
+    res.on('data', data => {
+      bufferArray.push(data);
+    })
+  
+    res.on('end', () => {
+      fs.writeFile('./icons/' + item.uid + '.png', Buffer.concat(bufferArray), err => {
+        if (err) {
+          console.error('uid:'+item.uid + '---' + err);
+          return
+        }
+        console.log(count++);
+      })
     })
   })
-})
+});
+
