@@ -1,6 +1,6 @@
 const fs = require('fs')
-const https = require('https')
-const items = require('./items')
+const axios = require('axios');
+const items = require('./items');
 
 const testItems = [
   {
@@ -11,15 +11,12 @@ const testItems = [
 
 let count = 1;
 
-items.forEach(item=>{
-  item.wikiIcon && https.get(item.wikiIcon, res => {
-    let bufferArray = [];
-    res.on('data', data => {
-      bufferArray.push(data);
-    })
-  
-    res.on('end', () => {
-      fs.writeFile('./icons/' + item.uid + '.png', Buffer.concat(bufferArray), err => {
+items.forEach(item => {
+  item.wikiIcon && axios.get(encodeURI(item.wikiIcon), {
+    responseType: 'arraybuffer',
+  })
+    .then(res => {
+      fs.writeFile('./icons/' + item.uid + '.png', Buffer.from(res.data), err => {
         if (err) {
           console.error('uid:'+item.uid + '---' + err);
           return
@@ -27,6 +24,7 @@ items.forEach(item=>{
         console.log(count++);
       })
     })
-  })
-});
-
+    .catch(err => {
+      console.error('uid:'+item.uid + '---' + err);
+    })
+})

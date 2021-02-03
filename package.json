@@ -1,0 +1,23 @@
+{
+  "name": "node_tinypng",
+  "version": "1.0.0",
+  "description": "",
+  "main": "node_TinyPNG.js",
+  "dependencies": {
+    "axios": "^0.21.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Zimomo333/node_TinyPNG.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Zimomo333/node_TinyPNG/issues"
+  },
+  "homepage": "https://github.com/Zimomo333/node_TinyPNG#readme"
+}
