@@ -27,7 +27,8 @@ items.forEach(item => {
           })
         })
         .catch(err => {
-          console.error('uid:'+item.uid + '---' + err);
+          console.error(item.uid);
+          console.error(item.wikiImg);
         })
     }
   })

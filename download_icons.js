@@ -10,7 +10,7 @@ const testItems = [
 ]
 
 let count = 1;
-
+// enImg
 items.forEach(item => {
   fs.access('./icons/' + item.uid + '.png', fs.constants.F_OK, (err) => {
     if(err) {
@@ -27,7 +27,8 @@ items.forEach(item => {
           })
         })
         .catch(err => {
-          console.error('uid:'+item.uid + '---' + err);
+          console.error(item.uid);
+          console.error(item.wikiIcon);
         })
     }
   })
